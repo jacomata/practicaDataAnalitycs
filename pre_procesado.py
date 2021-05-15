@@ -25,4 +25,6 @@ def preprocessed(df):
 
     print(pd.isna(df).sum())
 
+    df.to_excel('./datos_en_excel.xlsx')
+
     return df
