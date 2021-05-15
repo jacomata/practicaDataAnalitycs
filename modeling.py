@@ -88,13 +88,15 @@ def modeling(df, model: Model):
     x_train, x_test, y_train, y_test = train_test_split(df.drop(['relevant'], axis=1), df['relevant'], test_size=0.3,
                                                         random_state=1)
 
+    aux = model
     model = model()
 
     # Lo entremos
     cls = model.fit(x_train, y_train)
 
-    if model is Model.decision_tree:
-        print(tree.plot_tree(cls))
+    if aux is Model.decision_tree:
+        print("ENTRA")
+        tree.plot_tree(cls)
 
     # Hacemos una predicción
     y_pred = model.predict(x_test)
