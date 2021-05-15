@@ -53,6 +53,7 @@ def naive_bayes():
     # Creamos el Naive-Bayes
     return GaussianNB()
 
+
 class Model:
     decision_tree = decision_tree
     random_forest = random_forest
