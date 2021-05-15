@@ -26,11 +26,13 @@ def modeling(df):
     print(classification_report(y_test, y_pred))
 
     # Comparamos los reales con los predichos
+    print(confusion_matrix(y_test,y_pred))
+
 
     conf = pd.DataFrame(
         confusion_matrix(y_test, y_pred),
-        columns=['Predicted relevant', 'Predicted X'],
-        index=['True relevant', 'True X']
+        columns=['Predicted relevant', 'Predicted no relevant'],
+        index=['True relevant', 'True no relevant']
     )
 
     print(conf)
