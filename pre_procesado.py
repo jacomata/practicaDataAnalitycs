@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.impute import SimpleImputer
 
 
 def preprocessed(df):
@@ -16,5 +17,12 @@ def preprocessed(df):
             if i == 0:
                 contador += 1
         print(column, contador)
+
+    # Sustitución de nulos por el más frecuente
+    imputer_numericos = SimpleImputer(strategy='most_frequent')
+    columnas = df.columns
+    df = pd.DataFrame(imputer_numericos.fit_transform(df), columns=columnas)
+
+    print(pd.isna(df).sum())
 
     return df
