@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
 import pandas as pd
 
 
@@ -61,28 +62,6 @@ class Model:
     naive_bayes = naive_bayes
 
 
-def modeling(df, model: Model):
-    """
-    Dividimos los datos en un 70% para entrenamiento y 30% para testeo,
-    aparte separamos las variables de las etiquetas:
-        - En X guardamos las variables
-        - En Y las etiquetas
-    """
-    x_train, x_test, y_train, y_test = train_test_split(df.drop(['relevant'], axis=1), df['relevant'], test_size=0.3,
-                                                        random_state=1)
-
-    model = model()
-
-    # Lo entremos
-    model.fit(x_train, y_train)
-
-    # Hacemos una predicción
-    y_pred = model.predict(x_test)
-
-    # comparamos resultados
-    compare_results(y_test, y_pred)
-
-
 def compare_results(y_test, y_pred):
     """
     Compara los resultados clasificados por el modelo con los resultados reales
@@ -97,3 +76,29 @@ def compare_results(y_test, y_pred):
     )
 
     print(conf)
+
+
+def modeling(df, model: Model):
+    """
+    Dividimos los datos en un 70% para entrenamiento y 30% para testeo,
+    aparte separamos las variables de las etiquetas:
+        - En X guardamos las variables
+        - En Y las etiquetas
+    """
+    x_train, x_test, y_train, y_test = train_test_split(df.drop(['relevant'], axis=1), df['relevant'], test_size=0.3,
+                                                        random_state=1)
+
+    model = model()
+
+    # Lo entremos
+    cls = model.fit(x_train, y_train)
+
+    if model is Model.decision_tree:
+        print(tree.plot_tree(cls))
+
+    # Hacemos una predicción
+    y_pred = model.predict(x_test)
+
+    # comparamos resultados
+    compare_results(y_test, y_pred)
+
