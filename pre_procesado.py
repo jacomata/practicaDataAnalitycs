@@ -3,11 +3,11 @@ from sklearn.impute import SimpleImputer
 
 
 def preprocessed(df):
-    print(df.info())  # Información del DataFrame
+    # print(df.info())  # Información del DataFrame
 
-    print(df.describe())  # Descripción del DataGrame
+    # print(df.describe())  # Descripción del DataGrame
 
-    print(pd.isna(df).sum())  # Número de nulos de cada columna
+    # print(pd.isna(df).sum())  # Número de nulos de cada columna
 
     # Bucle para contar el número de ceros que tiene cada columna
     for column in df:
@@ -16,14 +16,14 @@ def preprocessed(df):
         for i in serie:
             if i == 0:
                 contador += 1
-        print(column, contador)
+        # print(column, contador)
 
     # Sustitución de nulos por el más frecuente
     imputer_numericos = SimpleImputer(strategy='most_frequent')
     columnas = df.columns
     df = pd.DataFrame(imputer_numericos.fit_transform(df), columns=columnas)
 
-    print(pd.isna(df).sum())
+    # print(pd.isna(df).sum())
 
     df.to_excel('./datos_en_excel.xlsx')
 
