@@ -2,6 +2,7 @@ import pickle
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 
 from modeling import decision_tree, compare_results, Model, modeling
 from pre_procesado import preprocessed
@@ -27,10 +28,19 @@ def main():
 
 
 def export_model():
+    df = pd.read_csv('./datos.csv')
+    model = DecisionTreeClassifier(min_samples_split=4, min_samples_leaf=4, max_depth=4)
+    x_train, x_test, y_train, y_test = train_test_split(df.drop(['relevant'], axis=1), df['relevant'], test_size=0.0001,
+                                                        random_state=1)
 
+    model.fit(x_train, y_train)
+
+    print(y_test)
+    """
     with open('model.pkl','wb') as model_file:
-        pickle.dump()
+    pickle.dump()
+    """
 
 
 if __name__ == '__main__':
-    main()
+    export_model()
