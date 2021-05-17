@@ -1,3 +1,5 @@
+import pickle
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -22,6 +24,12 @@ def main():
     modeling(df, Model.random_forest)
     modeling(df, Model.svm)
     modeling(df, Model.naive_bayes)
+
+
+def export_model():
+
+    with open('model.pkl','wb') as model_file:
+        pickle.dump()
 
 
 if __name__ == '__main__':
