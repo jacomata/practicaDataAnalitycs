@@ -5,3 +5,7 @@ __pycache__/
 venv/
 
 datos_en_excel.xlsx
+
+decistion_tree.log
+
+tree

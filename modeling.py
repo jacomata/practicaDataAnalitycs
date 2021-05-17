@@ -1,6 +1,8 @@
 # Gráficas
 import graphviz
-
+# Pandas
+import pandas as pd
+from sklearn import tree
 # Sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
@@ -8,10 +10,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from sklearn import tree
-
-# Pandas
-import pandas as pd
 
 
 def decision_tree():
@@ -94,26 +92,27 @@ def modeling(df, model: Model):
     x_train, x_test, y_train, y_test = train_test_split(df.drop(['relevant'], axis=1), df['relevant'], test_size=0.3,
                                                         random_state=1)
 
-    aux = model
-    model = model()
+    # Inicializamos el modelo
+    md = model()
 
     # Lo entrenamos
-    model.fit(x_train, y_train)
+    md.fit(x_train, y_train)
 
-    if aux is Model.decision_tree:
-        text_representation = tree.export_text(model)
+    # Vemos el árbol que se ha creado en el caso de Decision Tree
+    if model is Model.decision_tree:
+        text_representation = tree.export_text(md)
         with open("./decistion_tree.log", "w") as fout:
             fout.write(text_representation)
 
-        dot_data = tree.export_graphviz(model, out_file=None, feature_names=x_test.columns,
+        dot_data = tree.export_graphviz(md, out_file=None, feature_names=x_test.columns,
                                         class_names=['Predicted relevant', 'Predicted no relevant'], filled=True,
                                         rounded=True, special_characters=True)
 
         graph = graphviz.Source(dot_data, filename='./tree', format='png')
-        #graph.render()
+        # graph.render()
 
     # Hacemos una predicción
-    y_pred = model.predict(x_test)
+    y_pred = md.predict(x_test)
 
     # comparamos resultados
     compare_results(y_test, y_pred)
